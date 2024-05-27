@@ -33,3 +33,16 @@ jobs:
           echo  "access health.html page using curl "
           curl -f  http://localhost:1234/health.html
           # here we will get http response code 200 
+
+      - name: try to login from runner to docker hub account 
+        uses: docker/login-action@v3 
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+
+      - name: rebuild image in docker hub format and push it to docker hub
+        run: |
+          echo "this is home work for guys "
+          echo "plz find some action workflow "
+          echo "build image in docker hub format and push also " 
+        
