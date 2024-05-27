@@ -1,0 +1,8 @@
+version: '3.8'
+services:
+  ashu-ui-app:
+    image: ashu-webui:version4 # image we want to build 
+    build: . # location of dockerfile
+    container_name: ashuc1 
+    ports:
+      - 1234:80 
