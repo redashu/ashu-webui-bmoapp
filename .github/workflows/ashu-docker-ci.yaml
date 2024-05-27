@@ -28,3 +28,8 @@ jobs:
           docker-compose  up -d  
           sleep 2 
           docker-compose ps 
+      - name: verify health check page by access it usign postman / curl 
+        run: |
+          echo  "access health.html page using curl "
+          curl -f  http://localhost:1234/health.html
+          # here we will get http response code 200 
