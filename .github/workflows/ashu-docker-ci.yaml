@@ -19,9 +19,20 @@ jobs:
           cat /etc/os-release 
           docker version 
           docker-compose version 
-          sonar-scanner --version 
+          # sonar-scanner --version 
       - name: using pre-desing github workflow to get copy gitrepo code to runners machine 
         uses: actions/checkout@v4 
+
+      - name: Official SonarQube Scan
+        uses: SonarSource/sonarqube-scan-action@v2.1.0
+        with:
+          projectBaseDir: . 
+          args: >
+            -Dsonar.projectKey=ashu-python-project
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+            
 
       - name: verify github code and use docker compose to build and create 
         run: |
