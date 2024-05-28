@@ -4,7 +4,7 @@ name: ashu app containerization pipeline
 on:
   push:
     branches:
-      - "master"
+      - "dev"
 
 # jobs for performing operatiosn 
 jobs:
@@ -40,9 +40,13 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
 
-      - name: rebuild image in docker hub format and push it to docker hub
-        run: |
-          echo "this is home work for guys "
-          echo "plz find some action workflow "
-          echo "build image in docker hub format and push also " 
+      - name: Build and push to docker hub 
+        uses: docker/build-push-action@v5
+        with:
+          context: . # location of Dockerfile 
+          push: true
+          tags: docker.io/${{ secrets.DOCKERHUB_USERNAME }}/ashubmo-ui:uiversion001
+
+      - name: docker logout from runner after pushing image 
+        run: docker logout 
         
