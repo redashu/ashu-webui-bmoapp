@@ -54,7 +54,7 @@ jobs:
         run: |
           echo  "access health.html page using curl "
           curl -f  http://localhost:1234/health.html
-      - id: ecr-publish
+      - name: ecr-publish
         uses: bitovi/github-actions-ecr-publish@v0.1.0
         with:
           aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
