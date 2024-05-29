@@ -29,6 +29,7 @@ jobs:
             . 
             !**/.git*
             !**/*.md 
+            !**/.scannerwork
   ashu-build-job:
     runs-on: ubuntu-latest
     needs: ashu-sast-job # it will wait for SAST job to finish
@@ -53,3 +54,11 @@ jobs:
         run: |
           echo  "access health.html page using curl "
           curl -f  http://localhost:1234/health.html
+      - id: ecr-publish
+        uses: bitovi/github-actions-ecr-publish@v0.1.0
+        with:
+          aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws_default_region: us-east-1
+          aws_ecr_repo_name: 751136288263.dkr.ecr.us-east-1.amazonaws.com/bmo-webui-app
+          image_tag: ashuappv2github
