@@ -22,7 +22,7 @@ jobs:
       - name: checking docker version and sonarscanner 
         run: |
           docker version 
-          sonar-scanner --verion 
+          sonar-scanner --version 
   ashu-build-job:
     runs-on: macos-latest
     needs: ashu-sast-job # it will wait for SAST job to finish
