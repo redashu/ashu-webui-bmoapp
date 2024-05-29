@@ -17,26 +17,39 @@ jobs:
           sonar-scanner --version
       - name: fetch git code 
         uses: actions/checkout@v4
-
-      # - name: Official SonarQube Scan
-      #   uses: SonarSource/sonarqube-scan-action@v2.1.0
-      #   with:
-      #     projectBaseDir: . 
-      #     args: >
-      #       -Dsonar.projectKey=ashu-python-project
-      #   env:
-      #     SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-      #     SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }} 
       - name: using local sonar-scanner
         run: |
           pwd 
           sonar-scanner -D"sonar.projectKey=ashu-python-project" -D"sonar.sources=." -D"sonar.host.url=${{ secrets.SONAR_HOST_URL }}" -D"sonar.token=${{ secrets.SONAR_TOKEN }}"
-
+      - name: using upload artifacts 
+        uses: actions/upload-artifact@v4
+        with:
+          name: ashu-artifact
+          path: |
+            . 
+            !**/.git*
+            !**/*.md 
   ashu-build-job:
     runs-on: ubuntu-latest
     needs: ashu-sast-job # it will wait for SAST job to finish
     steps:
       - name: just check general message
         run: |
-          echo "python version checking"
-          python -V
+          echo "docker related details "
+          docker version 
+          docker-compose version
+      - name: downloading artifacts 
+        uses: actions/download-artifact@v4
+        with:
+          name: ashu-artifact
+          path: . 
+      - name: docker compose to build and test
+        run: |
+          ls -a 
+          docker-compose up -d --build 
+          sleep 2
+          docker-compose ps 
+      - name: verify health check page by access it usign postman / curl 
+        run: |
+          echo  "access health.html page using curl "
+          curl -f  http://localhost:1234/health.html
