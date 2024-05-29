@@ -16,7 +16,7 @@ jobs:
           whoami 
 
   ashu-sast-job:
-    runs-on: self-hosted
+    runs-on: windows-latest
     needs: ashu-code-checkjob # it will wait for job1 to finis 
     steps:
       - name: checking docker version and sonarscanner 
