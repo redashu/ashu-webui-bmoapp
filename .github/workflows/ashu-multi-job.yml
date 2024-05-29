@@ -1,0 +1,33 @@
+name: ashu app containerization pipeline 
+# Trigger -- when this pipeline should start
+on:
+  push:
+    branches:
+      - "dev"
+
+# creating multiple jobs
+jobs:
+  ashu-code-checkjob:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checking only 
+        run: | 
+          echo "just checking"
+          whoami 
+
+  ashu-sast-job:
+    runs-on: self-hosted
+    needs: ashu-code-checkjob # it will wait for job1 to finis 
+    steps:
+      - name: checking docker version and sonarscanner 
+        run: |
+          docker version 
+          sonar-scanner --verion 
+  ashu-build-job:
+    runs-on: macos-latest
+    needs: ashu-sast-job # it will wait for SAST job to finish
+    steps:
+      - name: just check general message
+        run: |
+          echo "python version checking"
+          python -V
