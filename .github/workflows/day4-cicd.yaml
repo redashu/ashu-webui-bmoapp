@@ -24,12 +24,14 @@ jobs:
       - name: Official SonarQube Scan
         uses: SonarSource/sonarqube-scan-action@v2.1.0
         with:
-          projectBaseDir: ./python-app-secret
+          projectBaseDir: .
           args: >
             -Dsonar.projectKey=ashu-common-project
+            -Dsonar.exclusions=ecr/**,Dockerfile,compose.yaml,*.html
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+
 
       - name: verify github code and use docker compose to build and create 
         run: |
@@ -65,14 +67,28 @@ jobs:
         run: |
           echo "please wait while image is getting pushed"
           docker push docker.io/${{ secrets.DOCKERHUB_USERNAME }}/ashupython:bmov${{ github.sha }}
-
+      - name: using upload artifacts 
+        uses: actions/upload-artifact@v4
+        with:
+          name: ashu-artifact
+          path: |
+            ./ashu-ecs
+  ashu-cdk-build:
+    runs-on: ubuntu-latest
+    steps:          
       - name: installing node 20 
         uses: actions/setup-node@v2 
         with:
           node-version: '20'
-
+      
+      - name: downloading artifacts 
+        uses: actions/download-artifact@v4
+        with:
+          name: ashu-artifact
+          path: .  
       - name: install npm modules for ecs 
         run: |
+          ls -a 
           node -v 
           cd ashu-ecs 
           npm install 
@@ -87,8 +103,3 @@ jobs:
           cd ashu-ecs
           npx cdk bootstrap 
           npx cdk deploy --no-rollback --require-approval never 
-          
-      - name: cdk destroy 
-        run: |
-          cd ashu-ecs
-          npx cdk destroy --force 
