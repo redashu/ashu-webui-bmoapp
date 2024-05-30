@@ -87,4 +87,8 @@ jobs:
           cd ashu-ecs
           npx cdk bootstrap 
           npx cdk deploy --no-rollback --require-approval never 
+          
+      - name: cdk destroy 
+        run: |
+          cd ashu-ecs
           npx cdk destroy --force 
