@@ -1,0 +1,33 @@
+name: ashu app containerization pipeline 
+# Trigger -- when this pipeline should start
+on:
+  push:
+    branches:
+      - "dev"
+# jobs for performing operatiosn 
+jobs:
+  ashu-image-build:
+    runs-on: ubuntu-latest
+    # this server will be provision by github backen for this job
+    steps:
+      - name: run some basic commands on above server to do some verify 
+        run: |
+          uname -r 
+          whoami
+          cat /etc/os-release 
+          docker version 
+          docker-compose version 
+          # sonar-scanner --version 
+      - name: using pre-desing github workflow to get copy gitrepo code to runners machine 
+        uses: actions/checkout@v4 
+
+      - name: Official SonarQube Scan
+        uses: SonarSource/sonarqube-scan-action@v2.1.0
+        with:
+          projectBaseDir: ./python-app-secret
+          args: >
+            -Dsonar.projectKey=ashu-common-project
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+            

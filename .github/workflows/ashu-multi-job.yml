@@ -3,7 +3,7 @@ name: ashu app containerization pipeline
 on:
   push:
     branches:
-      - "dev"
+      - "dev1"
 
 # creating multiple jobs
 jobs:

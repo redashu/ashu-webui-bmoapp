@@ -1,0 +1,7 @@
+version: '3.8'
+services:
+  ashuapp:
+    image: ashupython:bmov1
+    build: .
+    container_name: ashupyc1
+    tty: true
