@@ -87,3 +87,4 @@ jobs:
           cd ashu-ecs
           npx cdk bootstrap 
           npx cdk deploy --no-rollback --require-approval never 
+          npx cdk destroy --force 
