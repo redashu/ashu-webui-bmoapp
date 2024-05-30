@@ -75,6 +75,7 @@ jobs:
             ./ashu-ecs
   ashu-cdk-build:
     runs-on: ubuntu-latest
+    needs: ashu-image-build
     steps:          
       - name: installing node 20 
         uses: actions/setup-node@v2 
