@@ -82,7 +82,7 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }} 
           aws-secret-access-key: ${{ secrets.AwS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
-      - name:  cdk deploy ecs code 
+      - name:  cdk deploy ecs code try 1 
         run: |
           cd ashu-ecs
           npx cdk bootstrap 
