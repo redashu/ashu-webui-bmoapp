@@ -76,3 +76,14 @@ jobs:
           node -v 
           cd ashu-ecs 
           npm install 
+      - name: setup aws login details 
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }} 
+          aws-secret-access-key: ${{ secrets.AwS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+      - name:  cdk deploy ecs code 
+        run: |
+          cd ashu-ecs
+          npx cdk bootstrap 
+          npx cdk deploy --no-rollback --require-approval never 
