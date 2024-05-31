@@ -101,5 +101,5 @@ jobs:
       - name:  cdk deploy ecs code try 1 
         run: |
           
-          npx cdk bootstrap 
+          # npx cdk bootstrap 
           npx cdk deploy --context imageTag=${{ github.sha }} --require-approval never 

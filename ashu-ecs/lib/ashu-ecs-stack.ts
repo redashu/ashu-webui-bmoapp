@@ -29,7 +29,7 @@ export class AshuEcsStack extends cdk.Stack {
     const imageTag = this.node.tryGetContext('imageTag');
     if (!imageTag) {
       throw new Error('context variable name is required');
-    }
+    };
     // task Definition of farget launch type 
     const ashuTaskDef = new ecs.FargateTaskDefinition(this,'ashu-frg-task1',{
       cpu:  256,
