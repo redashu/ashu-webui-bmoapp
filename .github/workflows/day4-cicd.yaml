@@ -136,4 +136,5 @@ jobs:
       - name:  deploy using cdk 
         run:  | 
           echo "cdk deploy"
+          cd ashu-eks 
           npx cdk deploy --require-approval never
