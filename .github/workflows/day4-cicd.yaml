@@ -103,3 +103,8 @@ jobs:
           
           npx cdk bootstrap 
           npx cdk deploy --no-rollback --require-approval never 
+
+      - name: destroy 
+        run: |
+          echo "destroying "
+          npx cdk destroy --force 
