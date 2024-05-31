@@ -138,3 +138,14 @@ jobs:
           echo "cdk deploy"
           cd ashu-eks 
           npx cdk deploy --require-approval never
+
+      - name: getting eks creds 
+        run: |
+          echo "plz write aws eks update kubeconfig fig"
+          aws eks update-kubeconfig --name ashueks-ckdcluster --region us-east-1
+          cd eks-manifest
+          kubectl get nodes 
+          kubectl apply -f .
+          kubectl get deploy,svc  
+          kubectl set image deployment ashu-app-deploy ashu-customer=dockerashu/ashubmoweb:bmov${{ github.sha }}
+      
