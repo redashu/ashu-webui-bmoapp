@@ -103,3 +103,11 @@ jobs:
           
           # npx cdk bootstrap 
           npx cdk deploy --context imageTag=${{ github.sha }} --require-approval never 
+
+  ashu-app-deploy-eks:
+    runs-on: ubuntu-latest
+    steps:
+      - name:  checkking kubeclt 
+        run: | 
+          echo "checking kubectl version "
+          kubeclt version --client 
