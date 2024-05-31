@@ -111,4 +111,29 @@ jobs:
       - name:  checkking kubeclt 
         run: | 
           echo "checking kubectl version "
-          kubeclt version --client 
+          kubectl version --client 
+
+      - name: setup aws login details 
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }} 
+          aws-secret-access-key: ${{ secrets.AwS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+
+      - name: installing node 20 
+        uses: actions/setup-node@v2 
+        with:
+          node-version: '20'
+
+      - name: using pre-desing github workflow to get copy gitrepo code to runners machine 
+        uses: actions/checkout@v4 
+
+      - name:  cdk option 
+        run: |
+          cd ashu-esk 
+          npm install  
+
+      - name:  deploy using cdk 
+        run:  | 
+          echo "cdk deploy"
+          npx cdk deploy --require-approval never
