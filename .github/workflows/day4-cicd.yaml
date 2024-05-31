@@ -130,7 +130,7 @@ jobs:
 
       - name:  cdk option 
         run: |
-          cd ashu-esk 
+          cd ashu-eks
           npm install  
 
       - name:  deploy using cdk 
