@@ -3,7 +3,7 @@ name: ashu app containerization pipeline
 on:
   push:
     branches:
-      - "dev"
+      - "dev1"
 # jobs for performing operatiosn 
 jobs:
   ashu-image-build:
@@ -36,7 +36,7 @@ jobs:
       - name: verify github code and use docker compose to build and create 
         run: |
           ls  -a 
-          cd  python-app-secret
+          # cd  python-app-secret
           docker-compose  up -d  
           sleep 2 
           docker-compose ps 
@@ -44,13 +44,13 @@ jobs:
           docker-compose logs
       - name: Build an image from Dockerfile
         run: |
-          cd python-app-secret
-          docker build -t docker.io/${{ secrets.DOCKERHUB_USERNAME }}/ashupython:bmov${{ github.sha }} .
+          # cd python-app-secret
+          docker build -t docker.io/${{ secrets.DOCKERHUB_USERNAME }}/ashubmoweb:bmov${{ github.sha }} .
 
       - name: Run Trivy vulnerability scanner
         uses: aquasecurity/trivy-action@0.20.0
         with:
-          image-ref: 'docker.io/${{ secrets.DOCKERHUB_USERNAME }}/ashupython:bmov${{ github.sha }}'
+          image-ref: 'docker.io/${{ secrets.DOCKERHUB_USERNAME }}/ashubmoweb:bmov${{ github.sha }}'
           format: 'table'
           exit-code: '0' # exit code non zero terminate pipeline
           ignore-unfixed: true
@@ -66,7 +66,7 @@ jobs:
       - name: pushing image to docker hub 
         run: |
           echo "please wait while image is getting pushed"
-          docker push docker.io/${{ secrets.DOCKERHUB_USERNAME }}/ashupython:bmov${{ github.sha }}
+          docker push docker.io/${{ secrets.DOCKERHUB_USERNAME }}/ashubmoweb:bmov${{ github.sha }}
       - name: using upload artifacts 
         uses: actions/upload-artifact@v4
         with:
@@ -103,8 +103,3 @@ jobs:
           
           npx cdk bootstrap 
           npx cdk deploy --no-rollback --require-approval never 
-
-      - name: destroy 1
-        run: |
-          echo "destroying "
-          npx cdk destroy --force 
