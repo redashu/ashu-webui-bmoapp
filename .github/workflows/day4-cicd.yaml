@@ -3,7 +3,7 @@ name: ashu app containerization pipeline
 on:
   push:
     branches:
-      - "dev1"
+      - "dev"
 # jobs for performing operatiosn 
 jobs:
   ashu-image-build:
@@ -102,4 +102,4 @@ jobs:
         run: |
           
           npx cdk bootstrap 
-          npx cdk deploy --no-rollback --require-approval never 
+          npx cdk deploy --context imageTag=${{ github.sha }} --require-approval never 
