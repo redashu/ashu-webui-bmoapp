@@ -102,7 +102,8 @@ jobs:
         run: |
           
           # npx cdk bootstrap 
-          npx cdk deploy --context imageTag=${{ github.sha }} --require-approval never 
+          npx cdk deploy --context imageTag=${{ github.sha }} --require-approval never
+          npx cdk destroy --force --context imageTag=${{ github.sha }} 
 
   ashu-app-deploy-eks:
     runs-on: ubuntu-latest
@@ -141,11 +142,7 @@ jobs:
 
       - name: getting eks creds 
         run: |
-          echo "plz write aws eks update kubeconfig fig"
-          aws eks update-kubeconfig --name ashueks-ckdcluster --region us-east-1
-          cd eks-manifest
-          kubectl get nodes 
-          kubectl apply -f .
-          kubectl get deploy,svc  
-          kubectl set image deployment ashu-app-deploy ashu-customer=dockerashu/ashubmoweb:bmov${{ github.sha }}
+          echo "destroy cluster"
+          cd ashu-eks 
+          npx cdk destroy --force     
       
